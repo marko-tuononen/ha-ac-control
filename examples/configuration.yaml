@@ -1,0 +1,151 @@
+# Enable python_script integration
+python_script:
+
+# Define input booleans for today's and tomorrow's cooling hours
+input_boolean:
+  cooling_hour_0:
+    name: Cooling Hour 0
+    initial: off
+  cooling_hour_1:
+    name: Cooling Hour 1
+    initial: off
+  cooling_hour_2:
+    name: Cooling Hour 2
+    initial: off
+  cooling_hour_3:
+    name: Cooling Hour 3
+    initial: off
+  cooling_hour_4:
+    name: Cooling Hour 4
+    initial: off
+  cooling_hour_5:
+    name: Cooling Hour 5
+    initial: off
+  cooling_hour_6:
+    name: Cooling Hour 6
+    initial: off
+  cooling_hour_7:
+    name: Cooling Hour 7
+    initial: off
+  cooling_hour_8:
+    name: Cooling Hour 8
+    initial: off
+  cooling_hour_9:
+    name: Cooling Hour 9
+    initial: off
+  cooling_hour_10:
+    name: Cooling Hour 10
+    initial: off
+  cooling_hour_11:
+    name: Cooling Hour 11
+    initial: off
+  cooling_hour_12:
+    name: Cooling Hour 12
+    initial: off
+  cooling_hour_13:
+    name: Cooling Hour 13
+    initial: off
+  cooling_hour_14:
+    name: Cooling Hour 14
+    initial: off
+  cooling_hour_15:
+    name: Cooling Hour 15
+    initial: off
+  cooling_hour_16:
+    name: Cooling Hour 16
+    initial: off
+  cooling_hour_17:
+    name: Cooling Hour 17
+    initial: off
+  cooling_hour_18:
+    name: Cooling Hour 18
+    initial: off
+  cooling_hour_19:
+    name: Cooling Hour 19
+    initial: off
+  cooling_hour_20:
+    name: Cooling Hour 20
+    initial: off
+  cooling_hour_21:
+    name: Cooling Hour 21
+    initial: off
+  cooling_hour_22:
+    name: Cooling Hour 22
+    initial: off
+  cooling_hour_23:
+    name: Cooling Hour 23
+    initial: off
+  cooling_hour_tomorrow_0:
+    name: Cooling Hour Tomorrow 0
+    initial: off
+  cooling_hour_tomorrow_1:
+    name: Cooling Hour Tomorrow 1
+    initial: off
+  cooling_hour_tomorrow_2:
+    name: Cooling Hour Tomorrow 2
+    initial: off
+  cooling_hour_tomorrow_3:
+    name: Cooling Hour Tomorrow 3
+    initial: off
+  cooling_hour_tomorrow_4:
+    name: Cooling Hour Tomorrow 4
+    initial: off
+  cooling_hour_tomorrow_5:
+    name: Cooling Hour Tomorrow 5
+    initial: off
+  cooling_hour_tomorrow_6:
+    name: Cooling Hour Tomorrow 6
+    initial: off
+  cooling_hour_tomorrow_7:
+    name: Cooling Hour Tomorrow 7
+    initial: off
+  cooling_hour_tomorrow_8:
+    name: Cooling Hour Tomorrow 8
+    initial: off
+  cooling_hour_tomorrow_9:
+    name: Cooling Hour Tomorrow 9
+    initial: off
+  cooling_hour_tomorrow_10:
+    name: Cooling Hour Tomorrow 10
+    initial: off
+  cooling_hour_tomorrow_11:
+    name: Cooling Hour Tomorrow 11
+    initial: off
+  cooling_hour_tomorrow_12:
+    name: Cooling Hour Tomorrow 12
+    initial: off
+  cooling_hour_tomorrow_13:
+    name: Cooling Hour Tomorrow 13
+    initial: off
+  cooling_hour_tomorrow_14:
+    name: Cooling Hour Tomorrow 14
+    initial: off
+  cooling_hour_tomorrow_15:
+    name: Cooling Hour Tomorrow 15
+    initial: off
+  cooling_hour_tomorrow_16:
+    name: Cooling Hour Tomorrow 16
+    initial: off
+  cooling_hour_tomorrow_17:
+    name: Cooling Hour Tomorrow 17
+    initial: off
+  cooling_hour_tomorrow_18:
+    name: Cooling Hour Tomorrow 18
+    initial: off
+  cooling_hour_tomorrow_19:
+    name: Cooling Hour Tomorrow 19
+    initial: off
+  cooling_hour_tomorrow_20:
+    name: Cooling Hour Tomorrow 20
+    initial: off
+  cooling_hour_tomorrow_21:
+    name: Cooling Hour Tomorrow 21
+    initial: off
+  cooling_hour_tomorrow_22:
+    name: Cooling Hour Tomorrow 22
+    initial: off
+  cooling_hour_tomorrow_23:
+    name: Cooling Hour Tomorrow 23
+    initial: off
+
+automation: !include automations.yaml

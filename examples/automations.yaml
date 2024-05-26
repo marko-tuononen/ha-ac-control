@@ -1,0 +1,46 @@
+# Automation to determine cooling hours for tomorrow at 6 PM
+- alias: Determine Cooling Hours for Tomorrow
+  trigger:
+    - platform: time
+      at: '18:00:00'
+  action:
+    - service: python_script.cooling_hours
+
+# Automation to transfer tomorrow's cooling hours to today's at midnight
+- alias: Transfer Cooling Hours to Today
+  trigger:
+    - platform: time
+      at: '00:00:00'
+  action:
+    - repeat:
+        count: 24
+        sequence:
+          - service: input_boolean.turn_on
+            data:
+              entity_id: >
+                {% if is_state('input_boolean.cooling_hour_tomorrow_' ~ repeat.index0, 'on') %}
+                  input_boolean.cooling_hour_{{ repeat.index0 }}
+                {% endif %}
+          - service: input_boolean.turn_off
+            data:
+              entity_id: >
+                {% if is_state('input_boolean.cooling_hour_tomorrow_' ~ repeat.index0, 'off') %}
+                  input_boolean.cooling_hour_{{ repeat.index0 }}
+                {% endif %}
+
+# Automation to control the AC based on the current hour's input boolean
+- alias: Control AC Based on Calculated Hours
+  trigger:
+    - platform: time_pattern
+      minutes: 0
+  action:
+    - service: climate.set_hvac_mode
+      data_template:
+        entity_id: climate.toshiba
+        hvac_mode: >
+          {% set current_hour = now().hour %}
+          {% if is_state('input_boolean.cooling_hour_' ~ current_hour, 'on') %}
+            cool
+          {% else %}
+            off
+          {% endif %}
