@@ -1,3 +1,4 @@
+# pylint disable=missing-module-docstring
 # Script's internal parameters
 THRESHOLD_0 = 2.822
 THRESHOLD_1 = 5.644
@@ -6,26 +7,32 @@ COOLING_WEEKS = list(range(18,40))
 FALLBACK_COOLING_HOURS = list(range(0,6)) + list(range(12,18))
 
 
-def get_cooling_hours(current_week, prices_per_hour, price_thresholds, num_target_hours, cooling_weeks):
-    if current_week not in cooling_weeks:
+def get_cooling_hours(
+    week_now,
+    hourly_prices,
+    price_thresholds,
+    num_target_hours,
+    cooling_weeks
+):
+    if week_now not in cooling_weeks:
         return []
-    
-    cooling_hours = find_indices(
-        prices_per_hour,
+
+    return_hours = find_indices(
+        hourly_prices,
         lambda elem: elem <= price_thresholds[0]
     )
-    if len(cooling_hours) < num_target_hours:
+    if len(return_hours) < num_target_hours:
         candidate_hours = find_indices(
-            prices_per_hour,
-            lambda elem: elem > price_thresholds[0] and elem <= price_thresholds[1]
+            hourly_prices,
+            lambda elem: price_thresholds[0] < elem <= price_thresholds[1]
         )
         hours_to_add = sorted(
-            [(hour, prices_per_hour[hour]) for hour in candidate_hours],
+            [(hour, hourly_prices[hour]) for hour in candidate_hours],
             key=lambda elem: elem[1]
-        )[:num_target_hours-len(cooling_hours)]
-        cooling_hours.extend([hour[0] for hour in hours_to_add])
+        )[:num_target_hours-len(return_hours)]
+        return_hours.extend([hour[0] for hour in hours_to_add])
 
-    return sorted(cooling_hours)
+    return sorted(return_hours)
 
 
 def find_indices(lst, condition):
@@ -50,7 +57,10 @@ try:
         logger.info("Cooling hours calculated successfully.")
     else:
         cooling_hours = FALLBACK_COOLING_HOURS
-        logger.warning("Unable to read tomorrow's electricity prices from Nordpool sensor, using fallback cooling hours.")
+        logger.warning(
+            "Unable to read tomorrow's electricity prices from Nordpool sensor, "
+            "using fallback cooling hours."
+        )
 
     logger.info(f"Cooling hours for tomorrow: {cooling_hours}")
 
