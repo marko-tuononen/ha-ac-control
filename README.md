@@ -16,7 +16,7 @@ Functionality has been implemented using a combination of Home Assistant's autom
 
    - **Run the Python Script (cooling_hours.py)**: Create an automation that runs the Python script at 6 PM every day to prepare the schedule for the next day. The Python script calculates the cooling hours for the next day and updates the corresponding input booleans.
 
-   - **Transfer Booleans at Midnight**: Create an automation that transfers the input booleans from the next day to the current day at midnight.
+   - **Transfer Booleans at Midnight**: Create an automation that transfers the input booleans from the next day to the current day around midnight.
 
    - **Control the AC**: Create an automation that checks the input booleans each hour to decide whether to turn the AC on or off.
 

@@ -6,27 +6,24 @@
   action:
     - service: python_script.cooling_hours
 
-# Automation to transfer tomorrow's cooling hours to today's at midnight
+# Automation to transfer tomorrow's cooling hours to today's around midnight
 - alias: Transfer Cooling Hours to Today
   trigger:
     - platform: time
-      at: '00:00:00'
+      at: '23:45:00'
   action:
-    - repeat:
-        count: 24
-        sequence:
-          - service: input_boolean.turn_on
-            data:
-              entity_id: >
-                {% if is_state('input_boolean.cooling_hour_tomorrow_' ~ repeat.index0, 'on') %}
-                  input_boolean.cooling_hour_{{ repeat.index0 }}
+  - repeat:
+          count: 24
+          sequence:
+            - service_template: >
+                {% if is_state('input_boolean.cooling_hour_tomorrow_' ~ (repeat.index - 1), 'on') %}
+                  input_boolean.turn_on
+                {% else %}
+                  input_boolean.turn_off
                 {% endif %}
-          - service: input_boolean.turn_off
-            data:
-              entity_id: >
-                {% if is_state('input_boolean.cooling_hour_tomorrow_' ~ repeat.index0, 'off') %}
-                  input_boolean.cooling_hour_{{ repeat.index0 }}
-                {% endif %}
+              data:
+                entity_id: >
+                  input_boolean.cooling_hour_{{ repeat.index - 1 }}
 
 # Automation to control the AC based on the current hour's input boolean
 - alias: Control AC Based on Calculated Hours
