@@ -1,6 +1,6 @@
 import unittest
 import math
-from cooling_control import CoolingController
+from cooling_hours import get_cooling_hours, find_indices
 
 
 class TestCoolingHours(unittest.TestCase):
@@ -12,6 +12,20 @@ class TestCoolingHours(unittest.TestCase):
         15.930,  5.644,  7.361,  8.004,  9.022, 10.255,  9.919, 10.869,
         10.240,  4.470,  5.007,  6.101,  8.201, 16.001, 20.432, 22.642
     ]
+
+    def test_find_indices(self):
+        self.assertEqual(
+            [0, 1, 2, 3, 4, 5, 6, 9, 17, 18],
+            find_indices(self.TEST_PRICE_PER_HOUR, lambda elem: elem <= 5.644)
+        )
+        self.assertEqual(
+            [],
+            find_indices(self.TEST_PRICE_PER_HOUR, lambda elem: elem <= 1.000)
+        )
+        self.assertEqual(
+            list(range(24)),
+            find_indices(self.TEST_PRICE_PER_HOUR, lambda elem: elem > 0)
+        )
 
     def test_get_cooling_hours_target_hours(self):
         self._do_test_get_cooling_hours(
@@ -41,27 +55,27 @@ class TestCoolingHours(unittest.TestCase):
         )
 
     def _do_test_get_cooling_hours(self, threshold_0, threshold_1, expected_hours):
-        controller = CoolingController(
-            [threshold_0, threshold_1],
-            self.TARGET_COOLING_HOURS,
-            self.COOLING_WEEKS
-        )
-
         for current_week in list(set(range(54))-set(self.COOLING_WEEKS)):
             self.assertEqual(
                 [],
-                controller.get_cooling_hours(
+                get_cooling_hours(
                     current_week,
-                    self.TEST_PRICE_PER_HOUR
+                    self.TEST_PRICE_PER_HOUR,
+                    [threshold_0, threshold_1],
+                    self.TARGET_COOLING_HOURS,
+                    self.COOLING_WEEKS
                 )
             )
 
         for current_week in self.COOLING_WEEKS:
             self.assertEqual(
                 expected_hours,
-                controller.get_cooling_hours(
+                get_cooling_hours(
                     current_week,
-                    self.TEST_PRICE_PER_HOUR
+                    self.TEST_PRICE_PER_HOUR,
+                    [threshold_0, threshold_1],
+                    self.TARGET_COOLING_HOURS,
+                    self.COOLING_WEEKS
                 )
             )
 
